@@ -1,0 +1,14 @@
+{
+  "name": "partyapp-my",
+  "author": "The Asia Foundation",
+  "version": "0.1.1",
+  "dependencies": {
+    "csvjson": "^1.0.5",
+    "express": "^4.12.4",
+    "knayi-myscript": "^1.0.5",
+    "traverse": "^0.6.6"
+  },
+  "scripts": {
+    "start": "node app.js"
+  }
+}

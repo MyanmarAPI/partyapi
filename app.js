@@ -2,8 +2,7 @@ var express = require('express');
 var app = express();
 var csvjson = require('csvjson');
 var traverse = require('traverse');
-var rabbit = require("rabbit-node");
- 
+var knayi = require("knayi-myscript");
 
 app.use(express.static('app'));
 app.get('/', function (req, res) {
@@ -12,7 +11,7 @@ app.get('/', function (req, res) {
 
 app.get('/party',function(req,res){
 	var party=csvjson.toObject('app/data/my-parties.csv').output;
-	if(typeof(req.params.font)!=='undefined' && req.params.font==='zawgyi'){
+	if(req.query.font==='zawgyi'){
 		party=unizaw(party);
 	}
 	res.send(party);
@@ -29,14 +28,18 @@ var server = app.listen(8080, function () {
 
 function zawuni(obj){
 	traverse(obj).forEach(function (x) {
-    	this.update(rabbit.zg2uni(x));
+    if (typeof x !== "object") {
+      this.update(knayi(x).fontConvertSync('unicode5'));
+    }
 	});
 	return obj;
 }
 
 function unizaw(obj){
 	traverse(obj).forEach(function (x) {
-    	this.update(rabbit.uni2zg(x));
+    if (typeof x !== "object") {
+      this.update(knayi(x).fontConvertSync('zawgyi'));
+    }
 	});
 	return obj;
 }
