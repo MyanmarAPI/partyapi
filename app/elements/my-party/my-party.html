@@ -1,0 +1,71 @@
+<link rel="import"  href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import"  href="../../bower_components/iron-image/iron-image.html">
+<link rel="import"  href="../../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+
+<dom-module id="my-party">
+    <style>
+      :host {
+        display: block;
+        margin:15px 15px;
+      }
+
+      iron-selector{
+        @apply(--layout-vertical);
+        
+      }
+
+      paper-material{
+         margin-bottom: 10px;
+         @apply(--layout-horizontal);
+      }
+      paper-material iron-image{
+        width: 100px;
+        height: 100px;
+        @apply(--layout-flex-3);
+        background-color: #FFF;
+        padding:0 5px;
+      }
+      paper-material p{
+        @apply(--layout-flex-9);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        padding-left: 10px;
+      }
+      paper-material.iron-selected {
+        background: #F0F0F0;
+      }
+    </style>
+  <template>
+      <iron-ajax
+        auto
+        url="/party"
+        handle-as="json"
+        on-response="loadParty"></iron-ajax>
+        <iron-selector>
+          <template is="dom-repeat" items="{{parties}}" as="party">
+            <paper-material elevation="1">
+            <iron-image sizing="contain"
+      src="[[party.PartySeal]]"></iron-image>
+            <p class="paper-font-body">[[party.PartyNameEnglish]]</p>
+
+            <paper-material elevation="1">
+          </template>
+        </iron-selector>
+  </template>
+
+</dom-module>
+  <script>
+    (function () {
+      Polymer({
+        is: 'my-party',
+        properties: {
+          parties: Array
+        },
+        loadParty:function(req){
+            this.parties=req.detail.response;
+        }
+      });
+    })();
+  </script>

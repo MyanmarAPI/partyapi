@@ -5,16 +5,15 @@ var traverse = require('traverse');
 var knayi = require("knayi-myscript");
 
 app.use(express.static('app'));
-app.get('/', function (req, res) {
-  res.send('Hello World!');
-});
+
 
 app.get('/party',function(req,res){
 	var party=csvjson.toObject('app/data/my-parties.csv').output;
 	if(req.query.font==='zawgyi'){
 		party=unizaw(party);
 	}
-	res.send(party);
+
+	res.json(party);
 });
 
 var server = app.listen(8080, function () {
