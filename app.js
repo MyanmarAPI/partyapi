@@ -42,3 +42,5 @@ function unizaw(obj){
 	});
 	return obj;
 }
+
+module.exports = app;
