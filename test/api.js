@@ -12,7 +12,7 @@ describe('GET /data', function() {
           return done(err);
         }
         assert.include(res.text, 'National Unity Party');
-        assert.include(res.text, 'http://uecmyanmar.org/images/stories/political/2-flag.jpg');
+        assert.include(res.text, '/images/political/2-flag.jpg');
         done();
       });
   });
