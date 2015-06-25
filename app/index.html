@@ -57,31 +57,35 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <body unresolved class="fullbleed layout vertical">
 <template is="dom-bind" id="app">
-
-  <paper-drawer-panel id="paperDrawerPanel" forceNarrow>
+  <neon-animated-pages selected="0"
+                     entry-animation="slide-from-right-animation"
+                     exit-animation="slide-left-animation">
+  <neon-animatable id="page-list-party">
+      <paper-drawer-panel id="paperDrawerPanel" forceNarrow>
     <div drawer>
 
-      <!-- Drawer Toolbar -->
+      <!-- Drawer Toolbar 
       <paper-toolbar id="drawerToolbar">
-        <span>Menu</span>
+        <span>Language</span>
       </paper-toolbar>
-
+      -->
       <!-- Drawer Content -->
+      <h3 id="menu-language" class="paper-font-title">Language</h3>
       <paper-menu class="list" attr-for-selected="data-route" selected="{{route}}" on-iron-select="onMenuSelect">
-        <a data-route="party" href="/">
-          <iron-icon icon="home"></iron-icon>
-          <span>Party</span>
-        </a>
+        <paper-item>
+          <iron-icon icon="hardware:keyboard-arrow-right"></iron-icon>
+          <span>Zawgyi</span>
+        </paper-item>
 
-        <a data-route="users" href="/users">
-          <iron-icon icon="info"></iron-icon>
-          <span>Users</span>
-        </a>
+        <paper-item>
+          <iron-icon icon="hardware:keyboard-arrow-right"></iron-icon>
+          <span>Unicode</span>
+        </paper-item>
 
-        <a data-route="contact" href="/contact">
-          <iron-icon icon="mail"></iron-icon>
-          <span>Contact</span>
-        </a>
+        <paper-item>
+          <iron-icon icon="hardware:keyboard-arrow-right"></iron-icon>
+          <span>English</span>
+        <paper-item>
       </paper-menu>
     </div>
     <paper-header-panel main mode="standard">
@@ -93,7 +97,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <span class="flex"></span>
 
         <!-- Toolbar icons -->
-        <paper-icon-button icon="search"></paper-icon-button>
+       <!-- disable search button
+       <paper-icon-button icon="search"></paper-icon-button>
+       -->
         <div class="middle"></div>
 
         <!-- Application name -->
@@ -131,10 +137,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <p>This is the contact section</p>
           </paper-material>
         </section>
-
       </iron-pages>
     </paper-header-panel>
   </paper-drawer-panel>
+  </neon-animatable>
+  <neon-animatable id="page-party-detail">
+      <party-detail></party-detail>
+  </neon-animatable>
+</neon-animated-pages>
+  
 
 
 </template>

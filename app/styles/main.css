@@ -12,3 +12,18 @@ body {
     font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     color: #333;
 }
+
+neon-animated-pages{
+	margin: 0;
+	height: 100%;
+	@apply(--layout-fit);
+	overflow: hidden;
+	
+}
+neon-animatable{
+	background-color: #FFF;
+}
+
+#menu-language{
+	padding-left: 16px;
+}
