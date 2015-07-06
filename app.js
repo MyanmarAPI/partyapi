@@ -7,7 +7,7 @@ var knayi = require("knayi-myscript");
 app.use(express.static('app'));
 
 
-app.get('/party',function(req,res){
+app.get('/',function(req,res){
 	var party=csvjson.toObject('data/my-parties.csv').output;
 	if(req.query.font==='zawgyi'){
 		party=unizaw(party);
