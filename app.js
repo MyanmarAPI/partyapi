@@ -8,7 +8,7 @@ app.use(express.static('app'));
 
 
 app.get('/party',function(req,res){
-	var party=csvjson.toObject('app/data/my-parties.csv').output;
+	var party=csvjson.toObject('data/my-parties.csv').output;
 	if(req.query.font==='zawgyi'){
 		party=unizaw(party);
 	}
