@@ -9,11 +9,22 @@ app.use(express.static('app'));
 
 app.get('/',function(req,res){
 	var party=csvjson.toObject('data/my-parties.csv').output;
+	var format="unicode";
 	if(req.query.font==='zawgyi'){
 		party=unizaw(party);
+		format="zawgyi";
 	}
-
-	res.json(party);
+	var resp={
+		_meta:{
+			status:"ok",
+				count:party.length,
+				api_version: 1,
+				unicode:true,
+				format:format
+		},
+		data:party
+	};
+	res.json(resp);
 });
 
 var server = app.listen(process.env.PORT || '8080', '0.0.0.0', function () {
