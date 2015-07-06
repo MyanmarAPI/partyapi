@@ -5,7 +5,7 @@
   "dependencies": {
     "csvjson": "^1.0.5",
     "express": "^4.12.4",
-    "knayi-myscript": "^1.0.8",
+    "knayi-myscript": "^1.0.10",
     "traverse": "^0.6.6"
   },
   "devDependencies": {
