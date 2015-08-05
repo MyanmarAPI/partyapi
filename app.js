@@ -38,6 +38,7 @@ app.get('/',function(req,res){
 
 app.get('/detail/:id',function(req,res){
 	var id=req.params.id;
+	console.log(id);
 	MongoClient.connect(dbhost, function(err, db) {
 	  if(!err) {
 	    console.log("We are connected");
@@ -50,8 +51,10 @@ app.get('/detail/:id',function(req,res){
 					status:"error"
 					}
 	  		});
-	  	else
+	  	else{
+	  		console.log(item);
 	  		respond(req,res,item);
+	  	}
 	  });
 	  
 	});
