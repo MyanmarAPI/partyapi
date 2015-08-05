@@ -5,6 +5,7 @@ var traverse = require('traverse');
 var knayi = require("knayi-myscript");
 // Retrieve
 var MongoClient = require('mongodb').MongoClient;
+var ObjectID = require('mongodb').ObjectID;
 var dbhost="mongodb://10.240.33.97:27017/elecapi"
 
 
@@ -16,9 +17,6 @@ app.use(express.static('app'));
 app.get('/',function(req,res){
 
 	MongoClient.connect(dbhost, function(err, db) {
-	  if(!err) {
-	    console.log("We are connected");
-	  }
 	  var collection = db.collection('party');
 	  collection.find().toArray(function(err, items) {
 	  	if(err) 
@@ -37,12 +35,8 @@ app.get('/',function(req,res){
 });
 
 app.get('/detail/:id',function(req,res){
-	var id=req.params.id;
-	console.log(id);
+	var id=new ObjectID.createFromHexString(req.params.id);
 	MongoClient.connect(dbhost, function(err, db) {
-	  if(!err) {
-	    console.log("We are connected");
-	  }
 	  var collection = db.collection('party');
 	  collection.findOne({_id:id},function(err, item) {
 	  	if(err) 
