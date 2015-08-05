@@ -44,7 +44,7 @@ app.get('/detail/:id',function(req,res){
 	    console.log("We are connected");
 	  }
 	  var collection = db.collection('party');
-	  collection.findOne({id:id},function(err, item) {
+	  collection.findOne({_id:id},function(err, item) {
 	  	if(err) 
 	  		res.json({
 	  			_meta:{
@@ -52,7 +52,6 @@ app.get('/detail/:id',function(req,res){
 					}
 	  		});
 	  	else{
-	  		console.log(item);
 	  		respond(req,res,item);
 	  	}
 	  });
