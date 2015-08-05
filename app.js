@@ -55,7 +55,6 @@ app.get('/detail/:id',function(req,res){
 	  });
 	  
 	});
-	respond(req,res,data);
 });
 var server = app.listen(process.env.PORT || '8080', '0.0.0.0', function () {
 
