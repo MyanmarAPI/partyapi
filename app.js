@@ -6,10 +6,18 @@ var knayi = require("knayi-myscript");
 // Retrieve
 var MongoClient = require('mongodb').MongoClient;
 var ObjectID = require('mongodb').ObjectID;
-var dbhost="mongodb://10.240.33.97:27017/elecapi"
+var dbhost="mongodb://10.240.33.97:27017/elecapi";
 
 
-
+var fixDate=function(item){
+	if(item.establishment_approval_date!==null) item.establishment_approval_date =new Date(item.establishment_approval_date).getTime();
+	if(item.registration_application_date!==null) item.establishment_approval_date =new Date(item.registration_application_date).getTime();
+	if(item.registration_approval_date!==null) item.registration_approval_date =new Date(item.registration_approval_date).getTime();
+	if(item.establishment_date!==null) item.establishment_date =new Date(item.establishment_date).getTime();
+	item.created_at=new Date(item.created_at).getTime();
+	item.updated_at=new Date(item.updated_at).getTime();
+	return item;
+};
 
 app.use(express.static('app'));
 
@@ -19,19 +27,24 @@ app.get('/',function(req,res){
 	MongoClient.connect(dbhost, function(err, db) {
 	  var collection = db.collection('party');
 	  collection.find().toArray(function(err, items) {
-	  	if(err) 
+	  	if(err)
 	  		res.json({
 	  			_meta:{
 					status:"error"
 					}
 	  		});
-	  	else
-	  		respond(req,res,items);
+	  	else{
+					for (var i = 0; i < items.length; i++) {
+						items[i]=fixDate(items[i]);
+					}
+					respond(req,res,items);
+			}
+
 	  });
-	  
+
 	});
-	
-	
+
+
 });
 
 app.get('/detail/:id',function(req,res){
@@ -39,17 +52,18 @@ app.get('/detail/:id',function(req,res){
 	MongoClient.connect(dbhost, function(err, db) {
 	  var collection = db.collection('party');
 	  collection.findOne({_id:id},function(err, item) {
-	  	if(err) 
+	  	if(err)
 	  		res.json({
 	  			_meta:{
 					status:"error"
 					}
 	  		});
 	  	else{
+				item=fixDate(item);
 	  		respond(req,res,item);
 	  	}
 	  });
-	  
+
 	});
 });
 var server = app.listen(process.env.PORT || '8080', '0.0.0.0', function () {
@@ -67,7 +81,7 @@ function respond(req,res,data){
 	var format="unicode";
 
 	if(Array.isArray(data)) length=data.length;
-	
+
 	if(req.query.font==='zawgyi'){
 		data=unizaw(data);
 		format="zawgyi";
