@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var csvjson = require('csvjson');
 var traverse = require('traverse');
-var knayi = require("knayi-myscript");
+//var knayi = require("knayi-myscript");
 // Retrieve
 var MongoClient = require('mongodb').MongoClient;
 var ObjectID = require('mongodb').ObjectID;
@@ -10,8 +10,9 @@ var dbhost="mongodb://10.240.33.97:27017/elecapi";
 
 
 var fixDate=function(item){
+	if(item===null) return item;
 	if(item.establishment_approval_date!==null) item.establishment_approval_date =new Date(item.establishment_approval_date).getTime();
-	if(item.registration_application_date!==null) item.establishment_approval_date =new Date(item.registration_application_date).getTime();
+	if(item.registration_application_date!==null) item.registration_application_date =new Date(item.registration_application_date).getTime();
 	if(item.registration_approval_date!==null) item.registration_approval_date =new Date(item.registration_approval_date).getTime();
 	if(item.establishment_date!==null) item.establishment_date =new Date(item.establishment_date).getTime();
 	item.created_at=new Date(item.created_at).getTime();
@@ -79,14 +80,7 @@ function respond(req,res,data){
 	var length=1;
 	var unicode=true;
 	var format="unicode";
-
 	if(Array.isArray(data)) length=data.length;
-
-	if(req.query.font==='zawgyi'){
-		data=unizaw(data);
-		format="zawgyi";
-		unicode=false;
-	}
 
 	var resp={
 		_meta:{
