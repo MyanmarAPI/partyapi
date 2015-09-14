@@ -25,7 +25,8 @@ app.use(express.static('app'));
 
 
 app.get('/',function(req,res){
-
+	pagesize=20;
+	page=1;
 	if(typeof req.query.per_page!=='undefined'){
 		pagesize=parseInt(req.query.per_page);
 	}
@@ -58,6 +59,8 @@ app.get('/',function(req,res){
 });
 
 app.get('/detail/:id',function(req,res){
+	pagesize=1;
+	page=1;
 	var id=new ObjectID.createFromHexString(req.params.id);
 	MongoClient.connect(dbhost, function(err, db) {
 	  var collection = db.collection('party');
