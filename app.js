@@ -37,22 +37,34 @@ app.get('/',function(req,res){
 
 	MongoClient.connect(dbhost, function(err, db) {
 	  var collection = db.collection('party');
-	  collection.find({},{_id:0}).skip(pagesize*(page-1)).limit(pagesize).toArray(function(err, items) {
-	  	if(err)
-	  		res.json({
-	  			_meta:{
-					status:"error"
-					}
-	  		});
-	  	else{
-					for (var i = 0; i < items.length; i++) {
-						items[i]=fixDate(items[i]);
-					}
-					respond(req,res,items);
-			}
+	  collection.count(function(err, count) {
+		  	if(err)
+		  		res.json({
+		  			_meta:{
+						status:"error"
+						}
+		  		});
+		  	else{
+		  		collection.find({},{_id:0}).skip(pagesize*(page-1)).limit(pagesize).toArray(function(err, items) {
+				  	if(err)
+				  		res.json({
+				  			_meta:{
+								status:"error"
+								}
+				  		});
+				  	else{
+								for (var i = 0; i < items.length; i++) {
+									items[i]=fixDate(items[i]);
+								}
+								respond(req,res,items,count);
+						}
 
+				  });
+
+		  	}
 	  });
 
+	  
 	});
 
 
