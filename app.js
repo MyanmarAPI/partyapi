@@ -25,13 +25,13 @@ app.use(express.static('app'));
 
 
 app.get('/',function(req,res){
-	
-	if(typeof req.params.per_page!=='undefined'){
-		pagesize=req.params.per_page;
+
+	if(typeof req.query.per_page!=='undefined'){
+		pagesize=parseInt(req.query.per_page);
 	}
 
-	if(typeof req.params.page!=='undefined'){
-		page=req.params.page;
+	if(typeof req.query.page!=='undefined'){
+		page=parseInt(req.query.page);
 	}
 
 	MongoClient.connect(dbhost, function(err, db) {
