@@ -58,7 +58,7 @@ app.get('/',function(req,res){
 
 });
 
-app.get('/detail/:id',function(req,res){
+app.get('/:id',function(req,res){
 	pagesize=1;
 	page=1;
 	var id=new ObjectID.createFromHexString(req.params.id);
