@@ -100,6 +100,7 @@ function respond(req,res,data,total){
 
 	if(total===null){
 		links=null;
+		total_pages=1;
 	}
 	else {
 		if(page===1){
