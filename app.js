@@ -61,7 +61,7 @@ app.get('/',function(req,res){
 app.get('/:id',function(req,res){
 	pagesize=1;
 	page=1;
-	var id=new ObjectID.createFromHexString(req.params.id);
+	var id=req.params.id;
 	MongoClient.connect(dbhost, function(err, db) {
 	  var collection = db.collection('party');
 	  collection.findOne({id:id},{_id:0},function(err, item) {
