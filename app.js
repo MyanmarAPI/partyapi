@@ -37,7 +37,7 @@ app.get('/',function(req,res){
 
 	MongoClient.connect(dbhost, function(err, db) {
 	  var collection = db.collection('party');
-	  collection.find().skip(pagesize*(page-1)).limit(pagesize).toArray(function(err, items) {
+	  collection.find({},{_id:0}).skip(pagesize*(page-1)).limit(pagesize).toArray(function(err, items) {
 	  	if(err)
 	  		res.json({
 	  			_meta:{
@@ -64,7 +64,7 @@ app.get('/detail/:id',function(req,res){
 	var id=new ObjectID.createFromHexString(req.params.id);
 	MongoClient.connect(dbhost, function(err, db) {
 	  var collection = db.collection('party');
-	  collection.findOne({_id:id},function(err, item) {
+	  collection.findOne({id:id},{_id:0},function(err, item) {
 	  	if(err)
 	  		res.json({
 	  			_meta:{
@@ -72,7 +72,7 @@ app.get('/detail/:id',function(req,res){
 					}
 	  		});
 	  	else{
-				item=fixDate(item);
+			item=fixDate(item);
 	  		respond(req,res,item);
 	  	}
 	  });
