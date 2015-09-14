@@ -61,10 +61,10 @@ app.get('/',function(req,res){
 app.get('/:id',function(req,res){
 	pagesize=1;
 	page=1;
-	var id=req.params.id;
+	var id=parseInt(req.params.id);
 	MongoClient.connect(dbhost, function(err, db) {
 	  var collection = db.collection('party');
-	  collection.findOne({id:id},{_id:0},function(err, item) {
+	  collection.findOne({id:id},{fields:{_id:0}},function(err, item) {
 	  	if(err)
 	  		res.json({
 	  			_meta:{
@@ -73,7 +73,7 @@ app.get('/:id',function(req,res){
 	  		});
 	  	else{
 			item=fixDate(item);
-	  		respond(req,res,item);
+	  		respond(req,res,item,null);
 	  	}
 	  });
 
@@ -101,15 +101,16 @@ function respond(req,res,data,total){
 	if(total===null){
 		links=null;
 	}
+	else {
+		if(page===1){
+			links.previous=null;
+		}
 
-	if(page===1){
-		links.previous=null;
+		if(page===total_pages){
+			links.next=null;
+		}
 	}
-
-	if(page===total_pages){
-		links.next=null;
-	}
-
+	
 	if(Array.isArray(data)) length=data.length;
 
 	var resp={
