@@ -7,7 +7,8 @@ var knayi = require("knayi-myscript");
 var MongoClient = require('mongodb').MongoClient;
 var ObjectID = require('mongodb').ObjectID;
 var dbhost="mongodb://10.240.33.97:27017/elecapi";
-
+var pagesize=20;
+var page=1;
 
 var fixDate=function(item){
 	if(item.establishment_approval_date!==null) item.establishment_approval_date =new Date(item.establishment_approval_date).getTime();
@@ -23,10 +24,18 @@ app.use(express.static('app'));
 
 
 app.get('/',function(req,res){
+	
+	if(typeof req.params.per_page!=='undefined'){
+		pagesize=req.params.per_page;
+	}
+
+	if(typeof req.params.page!=='undefined'){
+		page=req.params.page;
+	}
 
 	MongoClient.connect(dbhost, function(err, db) {
 	  var collection = db.collection('party');
-	  collection.find().toArray(function(err, items) {
+	  collection.find().skip(pagesize*(page-1)).limit(pagesize).toArray(function(err, items) {
 	  	if(err)
 	  		res.json({
 	  			_meta:{
@@ -94,7 +103,9 @@ function respond(req,res,data){
 				count:length,
 				api_version: 1,
 				unicode:unicode,
-				format:format
+				format:format,
+				per_page:pagesize,
+				page:page
 		},
 		data:data
 	};
