@@ -88,10 +88,28 @@ var server = app.listen(process.env.PORT || '8080', '0.0.0.0', function () {
 
 });
 
-function respond(req,res,data){
+function respond(req,res,data,total){
 	var length=1;
 	var unicode=true;
 	var format="unicode";
+	var total_pages=Math.ceil(total/pagesize);
+	var links={
+		next:'?token='+req.query.token+'&page='+page+'&per_page='+per_page,
+		previous:'?token='+req.query.token+'&page='+(page-1)+'&per_page='+per_page
+	};
+
+	if(total===null){
+		links=null;
+	}
+
+	if(page===1){
+		links.previous=null;
+	}
+
+	if(page===total_pages){
+		links.next=null;
+	}
+
 	if(Array.isArray(data)) length=data.length;
 
 	var resp={
@@ -102,7 +120,9 @@ function respond(req,res,data){
 				unicode:unicode,
 				format:format,
 				per_page:pagesize,
-				page:page
+				current_page:page,
+				total_pages:total_pages,
+				links:links
 		},
 		data:data
 	};
