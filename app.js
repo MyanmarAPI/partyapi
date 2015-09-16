@@ -129,7 +129,7 @@ function respond(req,res,data,total){
 	var resp={
 		_meta:{
 			status:"ok",
-				count:length,
+				count:total,
 				api_version: 1,
 				unicode:unicode,
 				format:format,
