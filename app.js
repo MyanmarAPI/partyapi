@@ -106,8 +106,8 @@ function respond(req,res,data,total){
 	var format="unicode";
 	var total_pages=Math.ceil(total/pagesize);
 	var links={
-		next:'?token='+req.query.token+'&page='+(page+1)+'&per_page='+pagesize,
-		previous:'?token='+req.query.token+'&page='+(page-1)+'&per_page='+pagesize
+		next:'?page='+(page+1),
+		previous:'?page='+(page-1)
 	};
 
 	if(total===null){
