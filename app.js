@@ -6,7 +6,7 @@ var traverse = require('traverse');
 // Retrieve
 var MongoClient = require('mongodb').MongoClient;
 var ObjectID = require('mongodb').ObjectID;
-var dbhost="mongodb://10.240.33.97:27017/elecapi";
+var dbhost="mongodb://10.240.0.2:27017/elecapi";
 var pagesize=20;
 var page=1;
 
